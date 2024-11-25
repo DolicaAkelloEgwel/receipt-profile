@@ -7,6 +7,7 @@ import torch
 import yaml
 from diffusers import StableDiffusionPipeline
 from PIL import Image
+import os
 
 # Read Config File
 with open("config.yaml", "r") as file:
@@ -21,7 +22,8 @@ pipe = StableDiffusionPipeline.from_pretrained(MODEL_ID, torch_dtype=torch.float
 pipe = pipe.to("cuda")
 
 # Read the text from the receipt image
-image = Image.open(config["input_image"])
+FULL_IMAGE_PATH = os.path.join(os.getcwd(), config["image_filename"])
+image = Image.open(FULL_IMAGE_PATH)
 extracted_text = pytesseract.image_to_string(image)
 print("Receipt contents:", extracted_text)
 

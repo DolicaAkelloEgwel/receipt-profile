@@ -1,4 +1,4 @@
 tesseract_path: C:\\Program Files\\Tesseract-OCR\\tesseract.exe
 ollama_model: dolphin-phi
 ollama_url: http://localhost:11434/api/generate
-input_image: C:\Users\dakelloegwel\code\receipt-profile\aldi-receipt.jpg
+image_filename: aldi-receipt.jpg
