@@ -1,5 +1,7 @@
 import base64
 import json
+import os
+import platform
 
 import pytesseract
 import requests
@@ -7,14 +9,16 @@ import torch
 import yaml
 from diffusers import StableDiffusionPipeline
 from PIL import Image
-import os
 
 # Read Config File
 with open("config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
 # Path to Tesseract
-pytesseract.pytesseract.tesseract_cmd = config["tesseract_path"]
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = config["win_tesseract_path"]
+else:
+    pass
 
 # Stable Diffusion Setup
 MODEL_ID = "OFA-Sys/small-stable-diffusion-v0"
@@ -41,6 +45,7 @@ def talk_to_ollama(url, data):
         return actual_response
     else:
         return "Error: " + str(response.status_code) + response.text
+
 
 # Get Ollama to analyse the customer
 generate_profile_data = {
