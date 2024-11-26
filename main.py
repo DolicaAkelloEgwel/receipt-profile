@@ -5,25 +5,20 @@ import platform
 
 import pytesseract
 import requests
-import torch
 import yaml
-from diffusers import StableDiffusionPipeline
 from PIL import Image
 
 # Read Config File
 with open("config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
-# Path to Tesseract
+
 if platform.system() == "Windows":
+    # Path to Tesseract
     pytesseract.pytesseract.tesseract_cmd = config["win_tesseract_path"]
 else:
     pass
 
-# Stable Diffusion Setup
-MODEL_ID = "OFA-Sys/small-stable-diffusion-v0"
-pipe = StableDiffusionPipeline.from_pretrained(MODEL_ID, torch_dtype=torch.float16)
-pipe = pipe.to("cuda")
 
 # Read the text from the receipt image
 FULL_IMAGE_PATH = os.path.join(os.getcwd(), config["image_filename"])
@@ -60,6 +55,9 @@ if "Error" in response:
     exit()
 print(response)
 
-# Create a picture
-image = pipe(response + " 4K").images[0]
-image.save("output.png")
+if platform.system() == "Windows":
+    from create_picture import create_picture
+
+    create_picture(response)
+else:
+    pass
