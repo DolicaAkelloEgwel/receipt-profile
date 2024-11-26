@@ -58,6 +58,7 @@ print(response)
 if platform.system() == "Windows":
     from create_picture import create_picture
 
-    create_picture(response)
+    img = create_picture(response)
+    img.save("output.png")
 else:
     pass
