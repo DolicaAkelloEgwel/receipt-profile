@@ -1,4 +1,5 @@
 from io import BytesIO
+import base64
 
 from flask import Flask, jsonify
 
