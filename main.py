@@ -1,4 +1,3 @@
-import base64
 import json
 import os
 import platform
@@ -61,4 +60,6 @@ if platform.system() == "Windows":
     img = create_picture(response)
     img.save("output.png")
 else:
-    pass
+    import base64
+
+    response = requests.post(f"http://localhost:8000/txt2img/{response}")
