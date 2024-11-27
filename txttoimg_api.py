@@ -1,16 +1,17 @@
-from io import BytesIO
 import base64
+from io import BytesIO
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from create_picture import create_picture
 
 app = Flask(__name__)
 
 
-@app.route("/txt2img/<prompt>", methods=["GET"])
-def create_image(prompt: str):
-    img = create_picture(prompt)
+@app.route("/txt2img", methods=["POST"])
+def create_image():
+    data = request.json
+    img = create_picture(data.get("prompt"))
 
     im_file = BytesIO()
     img.save(im_file, format="JPEG")
