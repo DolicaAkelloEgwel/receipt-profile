@@ -33,5 +33,5 @@ if platform.system() == "Windows":
 else:
     import base64
 
-    response = requests.post("http://localhost:8000/txt2img", json={"receipt_content": extracted_text})
+    response = requests.post("http://127.0.0.1:8000/txt2img", json={"receipt_content": extracted_text})
     print(response.json())
