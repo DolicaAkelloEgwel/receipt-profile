@@ -8,12 +8,14 @@ from create_picture import create_picture
 app = Flask(__name__)
 
 
-@app.route("/txt2img/<prompt>", methods=["GET"])
-def create_image(prompt: str):
+@app.route("/txt2img", methods=["POST"])
+def create_image():
+    data = request.get_json()
+    prompt = data.get("prompt")
     img = create_picture(prompt)
 
     im_file = BytesIO()
-    img.save(im_file, format="JPEG")
+    img.save(im_file, format="PNG")
     im_b64 = base64.b64encode(im_file.getvalue())
 
     return jsonify({"value": im_b64})

@@ -62,4 +62,5 @@ if platform.system() == "Windows":
 else:
     import base64
 
-    response = requests.post(f"http://localhost:8000/txt2img/{response}")
+    response = requests.post("http://localhost:8000/txt2img", json={"prompt": response})
+    print(response.json())
