@@ -1,7 +1,7 @@
 from io import BytesIO
 import base64
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from create_picture import create_picture
 from transformers import pipeline
