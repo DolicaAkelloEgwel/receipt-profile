@@ -4,6 +4,7 @@ import base64
 from flask import Flask, jsonify
 
 from create_picture import create_picture
+from transformers import pipeline
 
 app = Flask(__name__)
 
