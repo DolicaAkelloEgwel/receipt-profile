@@ -14,9 +14,7 @@ with open("config.yaml", "r") as file:
 
 if platform.system() == "Windows":
     # Path to Tesseract
-    pytesseract.pytesseract.tesseract_cmd = config["win_tesseract_path"]
-else:
-    pass
+    pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 
 # Read the text from the receipt image
@@ -62,4 +60,11 @@ if platform.system() == "Windows":
 else:
     import base64
 
-    response = requests.post(f"http://localhost:8000/txt2img/{response}")
+    response = requests.post("http://localhost:8000/txt2img", data=json.dumps({"prompt": response}))
+
+    if response.status_code == 200:
+        response_text = response.text
+        data = json.loads(response_text)
+        actual_response = data["value"]
+    else:
+        print("Error: " + str(response.status_code) + response.text)
